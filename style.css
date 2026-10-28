@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  background: #18212b;
+  color: #eef3f8;
+  font-family: system-ui, sans-serif;
+}
+main { max-width: 800px; margin: 24px auto; padding: 0 16px; }
+h1 { margin-bottom: 8px; }
+canvas {
+  display: block;
+  width: 100%;
+  background: #263442;
+  border: 2px solid #8ea3b7;
+}
+canvas:focus { outline: 2px solid #8dd9ff; outline-offset: 3px; }
+#status { min-height: 1.5em; color: #ffdc75; }
