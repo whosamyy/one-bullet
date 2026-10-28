@@ -67,3 +67,29 @@ traveling and stopped, physical pickup, and repeated pickup/refiring.
 Health, damage, points per kill, and bullet interactions with enemies still need
 to be decided before those systems are implemented. No extra abilities,
 progression, menus, or stretch features have been added.
+
+## Next Steps
+
+1. Add enemies that spawn and chase the player.
+2. Implement bullet-enemy collisions and enemy deaths.
+3. Add player health and damage from enemies.
+4. Implement scoring and game over.
+5. Add remaining features from SPEC.md if time allows.
+
+## Known Bugs and Limitations
+
+No known bugs in the core bullet loop from current testing.
+
+Enemy interactions, health, scoring, and game over
+have not been implemented yet.
+
+The game has only been tested in Chrome.
+
+## Shortcuts Taken
+
+I kept the graphics basic and focused on the player
+movement and bullet retrieval loop because of the
+limited Phase 1 time.
+
+I also left the enemy and scoring systems unfinished
+so my partner can build on the existing structure.
