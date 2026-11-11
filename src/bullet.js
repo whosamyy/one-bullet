@@ -1,3 +1,5 @@
+import { advanceBullet, canRetrieveBullet } from './gameLogic.js';
+
 export class Bullet {
   constructor() {
     this.state = 'held';
@@ -25,26 +27,11 @@ export class Bullet {
 
   update(seconds, width, height) {
     if (this.state !== 'traveling') return;
-    // Stop at the first wall, including on diagonal shots.
-    const timeToX = this.velocityX > 0
-      ? (width - this.radius - this.x) / this.velocityX
-      : this.velocityX < 0 ? (this.radius - this.x) / this.velocityX : Infinity;
-    const timeToY = this.velocityY > 0
-      ? (height - this.radius - this.y) / this.velocityY
-      : this.velocityY < 0 ? (this.radius - this.y) / this.velocityY : Infinity;
-    const travelTime = Math.min(seconds, timeToX, timeToY);
-    this.x += this.velocityX * travelTime;
-    this.y += this.velocityY * travelTime;
-    if (travelTime < seconds || timeToX === seconds || timeToY === seconds) {
-      this.state = 'stopped';
-      this.velocityX = 0;
-      this.velocityY = 0;
-    }
+    Object.assign(this, advanceBullet(this, seconds, width, height));
   }
 
   retrieve(player) {
-    if (this.state !== 'stopped') return false;
-    if (Math.hypot(player.x - this.x, player.y - this.y) > player.radius + this.radius) return false;
+    if (!canRetrieveBullet(this, player)) return false;
     this.state = 'held';
     return true;
   }
