@@ -34,6 +34,6 @@ export function advanceBullet(bullet, seconds, width, height) {
 
 export function canRetrieveBullet(bullet, player) {
   if (bullet.state !== 'stopped') return false;
-  if (Math.hypot(player.x - bullet.x, player.y - bullet.y) > player.radius + bullet.radius) return false;
+  if (Math.hypot(player.x - bullet.x, player.y - bullet.y) >= player.radius + bullet.radius) return false;
   return true;
 }
