@@ -1,6 +1,7 @@
+Starting codebase: One Bullet, my HW7 Phase 1 browser game.
+
 # HW9 — Tests as Guardrails
 
-**Starting codebase: One Bullet, my HW7 Phase 1 browser game.**  
 Repository: https://github.com/whosamyy/one-bullet
 
 ## What I changed to make the game testable
@@ -15,7 +16,7 @@ The code was already separated from the DOM reasonably well, but a lot of the ac
 
 The original class methods now call these functions and apply their results. The functions don't access the page or mutate their inputs. This was a refactor, not a rewrite, so I tried to keep the original calculations and comparisons exactly the same. One easy thing to break would have been the update order: the game updates the player, advances the bullet, and then checks pickup, which means a bullet can be picked up on the same frame it stops. I left that order alone.
 
-After the extraction, the two existing integration tests still passed, and Node could import all three functions directly. I couldn't complete automated browser verification during the refactor because the browser automation did not initialize, so I am not counting the Node tests as proof that every browser interaction works.
+After the extraction, the two existing integration tests still passed, and Node could import all three functions directly. Automated browser verification during the refactor did not complete because the browser automation did not initialize. Before submission, I manually checked movement, firing lockout, wall stopping, pickup, and refiring in the browser and confirmed that they worked.
 
 ## The tests I wrote
 
@@ -25,7 +26,7 @@ For player movement, I tested moving right by a known distance, zero movement, e
 
 I focused on boundaries because those are easy places to make a tiny change that breaks a game rule. For example, `>=` versus `>` determines whether a player can pick up a bullet when their circles *just* touch. I also kept the original tests for firing lockout, reusing the same bullet, movement, and the shoot/retrieve/refire loop.
 
-I deliberately did **not** test drawing to the canvas, keyboard or mouse events, visual animation, or unfinished features such as enemies, health, and scoring. Those would need browser tests or additional implementation. The purpose here was to test the actual calculations and decisions without depending on the UI.
+I deliberately did **not** add automated tests for drawing to the canvas, keyboard or mouse events, visual animation, or unfinished features such as enemies, health, and scoring. Those would need browser tests or additional implementation. The manual browser check above covered the implemented controls and gameplay loop. The purpose here was to test the actual calculations and decisions without depending on the UI.
 
 I committed the new unit tests by themselves in **`6ad431f`** (`Add unit tests for player movement and bullet mechanics`), without changing source files or adding prompt-log changes in that commit.
 
@@ -80,7 +81,7 @@ I thought this result was interesting because the easiest *looking* way to get g
 
 ## AI usage and what I learned
 
-I used ChatGPT to plan the stages of the assignment and prepare Codex prompts. I used Codex to extract the functions, add the remaining tests, run the five mutation experiments, set up the CI workflow, and act as the verifier in a fresh session. I kept the substantive prompts and tool/model information in [`prompt_log.md`](prompt_log.md). The tests and failure messages above are from the actual runs, not made-up examples.
+I used ChatGPT to plan the stages of the assignment and prepare Codex prompts. I used Codex to extract the functions, add the remaining tests, run the five mutation experiments, set up the CI workflow, and act as the verifier in a fresh session. I also used Codex to review submission readiness and make the final documentation edits: moving the starting-codebase line, completing the available prompt log, and recording my manual browser check. I kept the substantive prompts and tool/model information in [`prompt_log.md`](prompt_log.md). The tests and failure messages above are from the actual runs, not made-up examples.
 
 I used the [HW9 assignment instructions](https://www.cs.cmu.edu/~113/hw9.html), [Node's test runner documentation](https://nodejs.org/api/test.html), and [GitHub Actions documentation](https://docs.github.com/en/actions) as references.
 

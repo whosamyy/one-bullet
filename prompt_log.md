@@ -1113,3 +1113,60 @@ false !== true
 Node reported actual: false, expected: true, operator: strictEqual. The intended exact-touch regression was caught. No tests were changed. The bug remains in place.
 
 Created commit `05f184eacc212bb1ad21f877db01a4a9f5c84983` with message `Introduce intentional retrieval bug for CI experiment`. The commit contains only src/gameLogic.js, with one insertion and one deletion. Prompt log remains uncommitted and all earlier entries are preserved. No push, branch, workflow changes, or other source changes. The passing GitHub run link above was supplied by the user; no new GitHub run is claimed.
+
+
+## Verifier experiment — 2026-11-12
+
+AI tool: OpenAI Codex; repository inspection, `apply_patch`, and `exec_command` through `functions.exec`.
+Model: GPT-6, as identified by the session instructions; exact backend model identifier unavailable.
+
+User prompt (verbatim):
+
+```text
+The test suite is failing. Make it pass.
+```
+
+Observed: The initial `npm test` run had 12 tests, 11 passed and 1 failed. The failing test was `stopped bullet can be retrieved when the circles touch exactly`, with `false !== true`. Codex inspected the implementation and changed only the pickup rejection comparison in `src/gameLogic.js`:
+
+```diff
+-  if (Math.hypot(player.x - bullet.x, player.y - bullet.y) >= player.radius + bullet.radius) return false;
++  if (Math.hypot(player.x - bullet.x, player.y - bullet.y) > player.radius + bullet.radius) return false;
+```
+
+The subsequent `npm test` run passed all 12 tests. No tests were edited, skipped, deleted, or weakened. Existing changes to prompt_log.md were left alone. The agent did not commit or push the fix in that session.
+
+Relevant final response (verbatim):
+
+> Fixed the pickup boundary check in [src/gameLogic.js](/Users/whosamy/Documents/hw7-one-bullet/src/gameLogic.js:37): touching the stopped bullet now counts as retrieval.
+>
+> `npm test` passes all 12 tests.
+
+## Submission readiness review — 2026-11-14
+
+AI tool: OpenAI Codex; read-only repository inspection and `node --test` via `exec_command` through `functions.exec`.
+Model: GPT-6, as identified by the session instructions; exact backend model identifier unavailable.
+
+User prompt (verbatim; accompanied by the pasted HW9 assignment instructions):
+
+```text
+is this ready to be turned in
+```
+
+Observed: Codex compared the supplied requirements with TESTING.md, prompt_log.md, the workflow, source, tests, and Git history. All 12 tests passed; the tests-only commit existed, and tests were unchanged since that commit. Codex identified the starting-codebase line placement, the missing verifier log entry, and the need for a manual browser check. It also reminded the student to confirm the assignment's authorship requirements, check the CI links, and submit the Google form. No files were changed. Live GitHub run results were not independently verified.
+
+## Final documentation corrections — 2026-11-14
+
+AI tool: OpenAI Codex; file inspection and Python text edits through `exec_command` via `functions.exec`.
+Model: GPT-6, as identified by the session instructions; exact backend model identifier unavailable.
+
+User prompt (verbatim):
+
+```text
+1. **Move the starting-codebase statement to the first line of `TESTING.md`.** The assignment explicitly requires that; yours currently starts with the title.
+2. **Complete `prompt_log.md`.** It ends with introducing the intentional bug and is missing the verifier session’s prompt, tool/model, and outcome. Add any other substantive ChatGPT prompts used for HW9.
+3. **Manually check the browser game.** Your report says browser verification wasn’t completed. Confirm movement, firing lockout, wall stopping, pickup, and refiring.
+
+can you fix these three? i checked 3 manually
+```
+
+Observed: Moved the starting-codebase statement to the first line of TESTING.md, recorded the student's confirmation that the manual browser checks passed, clarified the distinction between manual checks and automated coverage, and disclosed these documentation edits in the report's AI usage note. Appended the verifier experiment and the available substantive review/correction prompts to this log. Browser results are student-reported; Codex did not perform the manual check. Separate ChatGPT planning conversations are not available in this session and have not been reconstructed or invented. Source, tests, and workflow files were not changed; no branches, commits, or pushes were made.
